@@ -2,12 +2,20 @@
 
 namespace Tests\Feature;
 
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        DB::delete('delete from users');
+    }
+
     public function testLoginPage()
     {
         $this->get('/login')
@@ -24,11 +32,13 @@ class UserControllerTest extends TestCase
 
     public function testLoginSuccess()
     {
+        $this->seed(UserSeeder::class);
+
         $this->post('/login', [
-            "user" => "khannedy",
+            "user" => "eko@localhost",
             "password" => "rahasia"
         ])->assertRedirect("/")
-            ->assertSessionHas("user", "khannedy");
+            ->assertSessionHas("user", "eko@localhost");
     }
 
     public function testLoginForUserAlreadyLogin()
@@ -69,5 +79,4 @@ class UserControllerTest extends TestCase
         $this->post('/logout')
             ->assertRedirect("/");
     }
-
 }
