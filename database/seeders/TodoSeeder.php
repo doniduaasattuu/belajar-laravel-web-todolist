@@ -13,8 +13,14 @@ class TodoSeeder extends Seeder
      */
     public function run(): void
     {
-        $todo = new Todo();
-        $todo->id = 'a';
-        $todo->todo = 'Satu';
+        $todo1 = new Todo();
+        $todo1->id = '1';
+        $todo1->todo = 'Eko';
+        $todo1->save();
+
+        $todo2 = new Todo();
+        $todo2->id = '2';
+        $todo2->todo = 'Kurniawan';
+        $todo2->save();
     }
 }
